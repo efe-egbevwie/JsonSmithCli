@@ -1,9 +1,11 @@
 [versions]
 kotlin = "2.1.0"
 kotlinxSerialization = "1.8.0"
+okio = "3.5.0"
 
 [libraries]
 kotlinxSerializationJson = { module = "org.jetbrains.kotlinx:kotlinx-serialization-json", version.ref = "kotlinxSerialization" }
+okio = { module = "com.squareup.okio:okio", version.ref = "okio" }
 
 [plugins]
 kotlinMultiplatform = { id = "org.jetbrains.kotlin.multiplatform", version.ref = "kotlin" }

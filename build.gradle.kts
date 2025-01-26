@@ -3,7 +3,7 @@ plugins {
     alias(libs.plugins.kotlinxSerialization)
 }
 
-group = "me.user"
+group = "com.efe"
 version = "1.0-SNAPSHOT"
 
 repositories {
@@ -34,6 +34,9 @@ kotlin {
     sourceSets {
         nativeMain.dependencies {
             implementation(libs.kotlinxSerializationJson)
+            implementation(libs.okio)
         }
     }
 }
+
+

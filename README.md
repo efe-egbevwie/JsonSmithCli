@@ -1,22 +1,27 @@
-[![official JetBrains project](https://jb.gg/badges/official-plastic.svg)](https://confluence.jetbrains.com/display/ALL/JetBrains+on+GitHub)
-[![Kotlin](https://img.shields.io/badge/Kotlin-2.0-blue.svg?style=flat&logo=kotlin)](https://kotlinlang.org)
+# JsonSmith
 
-# Kotlin/Native Template
+A CLI application to generate classes for different languages from json files 
 
-A mostly-empty template to get started creating a Kotlin/Native project. 
+## Usage
+``` bash
+  JsonSmith --file='<file-path>' --language=<language> --output='<output-file=path>'"
+```
+or
 
-## Getting Started
+```bash
+      JsonSmith -f'<file-path>' -l=<language> -o='<output-file=path>'"
+```
+### Example
+```Bash
+    .\JsonSmith -f='jsonString.json' -l=java -o='C:files\JsonSmithCli\'
+```
 
-1. On the project page, click on the `Use this template` button
-2. Click on the `Create a new repository` drop-down item
-3. Fill in the details of the new repository you'll be creating under your account
-4. Click the `Create repository` button
-5. Browse to your repository and make the needed changes there.
-
-## Code of conduct
-
-Please read [our code of conduct](https://github.com/jetbrains#code-of-conduct).
-
-## License
-
-The [kmp-native-wizard template](https://github.com/Kotlin/kmp-native-wizard/) is licensed under [CC0](https://creativecommons.org/publicdomain/zero/1.0/deed.en).
+## Building
+To build, run the gradle task
+```Bash
+    ./gradlew nativeBinaries
+```
+Then run the app from the `build/bin/native/debugExecutable/`
+```Bash
+    ./JsonSmith -f'<file-path>' -l=<language> -o='<output-file=path>'"
+```

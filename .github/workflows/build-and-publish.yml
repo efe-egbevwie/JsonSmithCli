@@ -1,0 +1,77 @@
+name: Build and Release Native Binaries
+
+on:
+  push:
+    tags:
+      - "v*"
+
+jobs:
+  build:
+    runs-on: ${{ matrix.os }}
+    strategy:
+      matrix:
+        os: [ubuntu-latest, windows-latest, macos-latest]
+        include:
+          - os: ubuntu-latest
+            target: linuxX64
+          - os: windows-latest
+            target: mingwX64
+          - os: macos-latest
+            target: macosX64
+          - os: macos-latest
+            target: macosArm64
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v3
+
+      - name: Set up JDK
+        uses: actions/setup-java@v3
+        with:
+          distribution: 'oracle'
+          java-version: '19'
+
+      - name: Set execute permission on gradlew
+        if: runner.os != 'Windows'
+        run: chmod +x gradlew
+
+      - name: Build for ${{ matrix.target }}
+        run: ./gradlew linkReleaseExecutable
+
+      - name: Upload Artifact
+        uses: actions/upload-artifact@v3
+        with:
+          name: ${{ matrix.target }}-binary
+          path: build/bin/native/releaseExecutable/
+
+
+  release:
+    runs-on: ubuntu-latest
+    needs: build
+    steps:
+      - name: Download Artifacts
+        uses: actions/download-artifact@v3
+        with:
+          name: ${{ matrix.target }}-binary
+          path: ./artifacts
+
+      - name: Create GitHub Release
+        id: create_release
+        uses: actions/create-release@v1
+        with:
+          tag_name: ${{ github.ref }}
+          release_name: Release ${{ github.ref }}
+          draft: false
+          prerelease: false
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Upload Release Assets
+        uses: actions/upload-release-asset@v1
+        with:
+          upload_url: ${{ steps.create_release.outputs.upload_url }}
+          asset_path: ./artifacts/
+          asset_name: ${{ matrix.target }}-binary
+          asset_content_type: application/octet-stream
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}

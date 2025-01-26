@@ -52,8 +52,12 @@ jobs:
       - name: Download Artifacts
         uses: actions/download-artifact@v3
         with:
-          name: ${{ matrix.target }}-binary
           path: ./artifacts
+          merge-multiple: true
+
+      - name: Display structure of downloaded files
+        run: ls -R path/to/artifacts
+
 
       - name: Create GitHub Release
         id: create_release

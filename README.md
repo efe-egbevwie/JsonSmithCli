@@ -2,6 +2,9 @@
 
 A CLI application to generate classes for different languages from json files 
 
+## Binaries
+Binaries can be downloaded for Linux, macos and windows from the releases page
+
 ## Usage
 ``` bash
   JsonSmith --file='<file-path>' --language=<language> --output='<output-file=path>'"

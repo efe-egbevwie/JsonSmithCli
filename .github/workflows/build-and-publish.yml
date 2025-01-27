@@ -10,7 +10,7 @@ jobs:
     runs-on: ${{ matrix.os }}
     strategy:
       matrix:
-        os: [ubuntu-latest, windows-latest, macos-latest]
+        os: [ ubuntu-latest, windows-latest, macos-latest, macos-latest ]
         include:
           - os: ubuntu-latest
             target: linuxX64
@@ -59,23 +59,13 @@ jobs:
         run: ls -R ./artifacts
 
 
-      - name: Create GitHub Release
-        id: create_release
-        uses: actions/create-release@v1
+      - name: Create Release
+      - uses: marvinpinto/action-automatic-releases@latest
         with:
-          tag_name: ${{ github.ref }}
-          release_name: Release ${{ github.ref }}
-          draft: false
+          repo_token: "${{ secrets.GITHUB_TOKEN }}"
           prerelease: false
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          files: ./artifacts/**
+            ./artifacts/linuxX64-binary/JsonSmith.kexe
+            ./artifacts/macosArm64-binary/JsonSmith.kexe
+            ./artifacts/mingwX64-binary/JsonSmith.exe
 
-      - name: Upload Release Assets
-        uses: actions/upload-release-asset@v1
-        with:
-          upload_url: ${{ steps.create_release.outputs.upload_url }}
-          asset_path:  ./artifacts/**/*
-          asset_name: ${{ matrix.target }}-binary
-          asset_content_type: application/octet-stream
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}

@@ -65,8 +65,7 @@ jobs:
           repo_token: "${{ secrets.GITHUB_TOKEN }}"
           prerelease: false
           files: |
-            ./artifacts/linuxX64-binary/*.kexe
-            ./artifacts/macosArm64-binary/*.kexe
-            ./artifacts/macosX64-binary/*.kexe
-            ./artifacts/mingwX64-binary/*.exe
+            ./artifacts/*.kexe
+            ./artifacts/*.exe
+            
 

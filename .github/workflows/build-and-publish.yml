@@ -64,7 +64,9 @@ jobs:
         with:
           repo_token: "${{ secrets.GITHUB_TOKEN }}"
           prerelease: false
-          files: ./artifacts/**
+          files: |
+            ./artifacts/**
+            ./artifacts/**/*
             ./artifacts/linuxX64-binary/JsonSmith.kexe
             ./artifacts/macosArm64-binary/JsonSmith.kexe
             ./artifacts/mingwX64-binary/JsonSmith.exe

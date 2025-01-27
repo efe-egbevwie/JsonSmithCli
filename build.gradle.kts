@@ -23,10 +23,19 @@ kotlin {
         else -> throw GradleException("Host OS is not supported in Kotlin/Native.")
     }
 
+    val hostOsSuffix = when{
+        hostOs == "Mac OS X" && isArm64 -> "macOsArm64"
+        hostOs == "Mac OS X" && !isArm64 -> "macOsX64"
+        hostOs == "Linux" && isArm64 -> "linuxArm64"
+        hostOs == "Linux" && !isArm64 -> "linuxX64"
+        isMingwX64 -> "windowsX64"
+        else -> ""
+    }
     nativeTarget.apply {
         binaries {
             executable {
                 entryPoint = "main"
+                baseName = "JsonSmith-${hostOsSuffix}"
             }
         }
     }
